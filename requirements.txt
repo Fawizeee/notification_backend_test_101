@@ -6,7 +6,7 @@ uvicorn==0.24.0
 python-multipart==0.0.6
 
 # Push Notifications
-pywebpush==1.15.1
+pywebpush
 
 # Background Tasks
 apscheduler==3.10.4
