@@ -186,11 +186,11 @@ def remove_expired_subscription(subscription):
     finally:
         db.close()
 
+
+# Improved background check task
 def check_inactive_users():
-    """Background task to check inactive users - creates its own database session"""
     print(f"Checking inactive users at {datetime.utcnow()}")
     
-    # Create a new database session for this background task
     db = SessionLocal()
     try:
         inactive_time = datetime.utcnow() - timedelta(minutes=1)
@@ -212,6 +212,7 @@ def check_inactive_users():
                 
                 if success:
                     successful_notifications += 1
+                    # Update last_active to prevent spamming
                     user.last_active = datetime.utcnow()
                 else:
                     failed_notifications += 1
@@ -226,9 +227,9 @@ def check_inactive_users():
     except Exception as e:
         print(f"Error in check_inactive_users: {e}")
     finally:
-        db.close()  # Always close the session
+        db.close()
 
-# Scheduler configuration
+# Configure scheduler properly
 executors = {
     'default': ThreadPoolExecutor(1)
 }
@@ -247,7 +248,7 @@ scheduler = BackgroundScheduler(
 scheduler.add_job(
     check_inactive_users, 
     "interval", 
-    minutes=1,
+    minutes=2,
     id="inactive_users_check"
 )
 
