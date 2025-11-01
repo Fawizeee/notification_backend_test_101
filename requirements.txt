@@ -1,5 +1,12 @@
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-pywebpush==1.14.0
-sqlalchemy==2.0.23
-apscheduler==3.10.4
+fastapi
+uvicorn[standard]
+python-multipart
+pywebpush
+apscheduler
+sqlalchemy
+cryptography
+python-jose
+passlib
+python-dotenv
+requests
+vapid
