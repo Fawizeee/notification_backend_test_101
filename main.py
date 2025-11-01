@@ -6,6 +6,7 @@ from apscheduler.executors.pool import ThreadPoolExecutor
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, JSON
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from sqlalchemy.pool import StaticPool
 from urllib.parse import urlparse
 import json
 import base64
