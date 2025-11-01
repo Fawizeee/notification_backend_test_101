@@ -27,7 +27,7 @@ Base = declarative_base()
 
 # Use check_same_thread=False for SQLite to allow connection sharing
 engine = create_engine(
-    "sqlite:///users.db", 
+    "sqlite:///:memory:", 
     connect_args={"check_same_thread": False},
     poolclass=StaticPool  # Use static pool for SQLite to avoid threading issues
 )
