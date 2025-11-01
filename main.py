@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Database setup
 Base = declarative_base()
-engine = create_engine("sqlite:///:memory")
+engine = create_engine("sqlite:///:memory:")
 SessionLocal = sessionmaker(bind=engine)
 
 def generate_vapid_keys():
