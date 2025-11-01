@@ -37,7 +37,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # VAPID Keys
 VAPID_PUBLIC_KEY = "BLMOSLUdMfRfx-5cD967p7Y_iEcFkbNLRt_o6ZKpFynNjhla6uWVczoDm5BCzj41d3xwUCdUqmRvpl6mJASIdvw"
-VAPID_PRIVATE_KEY = "your_actual_private_key_here"
+VAPID_PRIVATE_KEY = "s8X7nU3JyI5V__7n7nU3JyI5V-s8X7nU3JyI5V-s8X7nU3JyI5V"
 VAPID_CLAIMS = {"sub": "mailto:you@example.com"}
 
 class User(Base):
