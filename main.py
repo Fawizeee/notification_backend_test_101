@@ -233,13 +233,12 @@ except Exception as e:
 def root():
     return {"message": "FastAPI Push Notification Service Running"}
 
-@app.post("/send-test-notification")
-async def send_test_notification(request: Request, db: Session = Depends(get_db)):
-    """Send a test notification to a specific user"""
-    data = await request.json()
-    user_name = data.get("name")
-    
+@app.get("/test-subscription/{user_name}")
+def test_subscription(user_name: str):
+    """Endpoint to test a specific user's subscription"""
+    db = SessionLocal()
     user = db.query(User).filter(User.name == user_name).first()
+    db.close() 
     
     if not user:
         return {"error": "User not found"}
@@ -247,19 +246,20 @@ async def send_test_notification(request: Request, db: Session = Depends(get_db)
     if not user.subscription:
         return {"error": "User has no subscription"}
     
-    print(f"Sending TEST notification to {user_name}")
-    
+    # Test the subscription
     success = send_push_notification(
         user.subscription,
         title="Test Notification",
-        message=f"This is a test notification sent at {datetime.utcnow().strftime('%H:%M:%S')}"
+        message="This is a test notification from the server!"
     )
     
     return {
-        "user": user_name,
+        "user": user.name,
         "has_subscription": user.subscription is not None,
-        "test_success": success
+        "test_success": success,
+        "endpoint": user.subscription.get('endpoint', 'unknown') if user.subscription else 'none'
     }
+
 
 # Shutdown scheduler when app stops
 @app.on_event("shutdown")
