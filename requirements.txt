@@ -1,12 +1,29 @@
-fastapi
-uvicorn[standard]
-python-multipart
-pywebpush
-apscheduler
-sqlalchemy
-cryptography
-python-jose
-passlib
-python-dotenv
-requests
-vapid
+# Web Framework
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Form data parsing
+python-multipart==0.0.6
+
+# Push Notifications
+pywebpush==1.15.1
+
+# Background Tasks
+apscheduler==3.10.4
+
+# Database
+sqlalchemy==2.0.23
+
+# Cryptography & Security
+cryptography==41.0.7
+python-jose==3.3.0
+passlib==1.7.4
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# HTTP Requests
+requests==2.31.0
+
+# Alternative VAPID key generation
+vapid==1.9.1
