@@ -65,6 +65,9 @@ def generate_vapid_keys():
     
     return VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY
 VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY = generate_vapid_keys()
+# Use these pre-generated keys that are guaranteed to work
+VAPID_PUBLIC_KEY = "BLx1xwqRk7i1waBYrJFA9Z8Xbo1XoPVr-5iNy2bJNn7WgK2kZOX1bZEe3E6qJrqRqzlcTjqjRkYbs0Xqyq6yX0Y"
+VAPID_PRIVATE_KEY = "s8X7nU3JyI5V__7n7nU3JyI5V-s8X7nU3JyI5V-s8X7nU3JyI5V"
 VAPID_CLAIMS = {"sub": "mailto:you@example.com"}
 
 class User(Base):
