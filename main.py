@@ -231,14 +231,19 @@ def check_inactive_users():
 
 # Configure scheduler properly
 executors = {
-    'default': ThreadPoolExecutor(1)
+    'default': ThreadPoolExecutor(2)  # Increased to 2 threads
 }
 
 job_defaults = {
-    'coalesce': True,
-    'max_instances': 1,
-    'misfire_grace_time': 60
+    'coalesce': False,  # Don't combine skipped executions
+    'max_instances': 2,  # Allow 2 concurrent instances
+    'misfire_grace_time': 120  # 2 minute grace period
 }
+
+scheduler = BackgroundScheduler(
+    executors=executors,
+    job_defaults=job_defaults
+)
 
 scheduler = BackgroundScheduler(
     executors=executors,
