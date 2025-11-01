@@ -36,8 +36,34 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # VAPID Keys
-VAPID_PUBLIC_KEY = "BLMOSLUdMfRfx-5cD967p7Y_iEcFkbNLRt_o6ZKpFynNjhla6uWVczoDm5BCzj41d3xwUCdUqmRvpl6mJASIdvw"
-VAPID_PRIVATE_KEY = "s8X7nU3JyI5V__7n7nU3JyI5V-s8X7nU3JyI5V-s8X7nU3JyI5V"
+def generate_vapid_keys():
+    """Generate proper VAPID keys for web push"""
+    from cryptography.hazmat.primitives.asymmetric import ec
+    from cryptography.hazmat.primitives import serialization
+    
+    # Generate new key pair
+    private_key = ec.generate_private_key(ec.SECP256R1())
+    public_key = private_key.public_key()
+    
+    # Get the raw private key bytes (32 bytes for P-256)
+    private_key_raw = private_key.private_numbers().private_value.to_bytes(32, byteorder='big')
+    
+    # Export public key in uncompressed point format (65 bytes)
+    public_key_raw = public_key.public_bytes(
+        encoding=serialization.Encoding.X962,
+        format=serialization.PublicFormat.UncompressedPoint
+    )
+    
+    # Convert to URL-safe base64
+    VAPID_PRIVATE_KEY = base64.urlsafe_b64encode(private_key_raw).decode('utf-8').strip('=')
+    VAPID_PUBLIC_KEY = base64.urlsafe_b64encode(public_key_raw).decode('utf-8').strip('=')
+    
+    print("Generated VAPID keys:")
+    print("Public Key:", VAPID_PUBLIC_KEY)
+    print("Private Key:", VAPID_PRIVATE_KEY)
+    
+    return VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY
+VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY = generate_vapid_keys()
 VAPID_CLAIMS = {"sub": "mailto:you@example.com"}
 
 class User(Base):
