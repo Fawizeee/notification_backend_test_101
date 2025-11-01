@@ -8,6 +8,8 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, JSON
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 from sqlalchemy.pool import StaticPool
 from urllib.parse import urlparse
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import serialization
 import json
 import base64
 import os
@@ -38,8 +40,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # VAPID Keys
 def generate_vapid_keys():
     """Generate proper VAPID keys for web push"""
-    from cryptography.hazmat.primitives.asymmetric import ec
-    from cryptography.hazmat.primitives import serialization
+
     
     # Generate new key pair
     private_key = ec.generate_private_key(ec.SECP256R1())
